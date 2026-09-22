@@ -1,0 +1,2793 @@
+{
+  "version": "cu100-v1",
+  "input": "timestamped transcript replay; no microphone/ASR inference",
+  "routing": "All observed native CU and Browser Use candidates are offered together. No forced backend quotas.",
+  "scoring": "Exact independent final state, unrequested apps unchanged, required input events delivered, no mutation before protected input, no uncertain execution. Failures remain failures.",
+  "limits": {
+    "actions": 24,
+    "decisions": 40,
+    "seconds": 100
+  },
+  "cases": [
+    {
+      "id": "C01",
+      "group": "C",
+      "category": "addition",
+      "events": [
+        {
+          "text": "用计算器算12加7，停在结果。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-700"
+      },
+      "expect": {
+        "calc": "19"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C02",
+      "group": "C",
+      "category": "subtraction",
+      "events": [
+        {
+          "text": "用计算器算32减9。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-701"
+      },
+      "expect": {
+        "calc": "23"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C03",
+      "group": "C",
+      "category": "multiplication",
+      "events": [
+        {
+          "text": "用计算器算6乘8。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-702"
+      },
+      "expect": {
+        "calc": "48"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C04",
+      "group": "C",
+      "category": "division",
+      "events": [
+        {
+          "text": "用计算器算81除以9。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-703"
+      },
+      "expect": {
+        "calc": "9"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C05",
+      "group": "C",
+      "category": "decimal",
+      "events": [
+        {
+          "text": "用计算器算1.5加2.25。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-704"
+      },
+      "expect": {
+        "calc": "3.75"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C06",
+      "group": "C",
+      "category": "negative",
+      "events": [
+        {
+          "text": "把计算器当前显示的8改成负数，不做其他计算。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "8",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-705"
+      },
+      "expect": {
+        "calc": "-8"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C07",
+      "group": "C",
+      "category": "percentage",
+      "events": [
+        {
+          "text": "把计算器里的25转换成百分比小数。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "25",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-706"
+      },
+      "expect": {
+        "calc": "0.25"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C08",
+      "group": "C",
+      "category": "background",
+      "events": [
+        {
+          "text": "昨天同事用计算器算了6乘8，这只是背景，我今天还没布置计算任务。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-707"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "C09",
+      "group": "C",
+      "category": "quote",
+      "events": [
+        {
+          "text": "会议原话是“用计算器算12加7”，我在复述会议，不是现在让你操作。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-708"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "C10",
+      "group": "C",
+      "category": "incomplete",
+      "events": [
+        {
+          "text": "我想让计算器算一下",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-709"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "C11",
+      "group": "C",
+      "category": "background_then_goal",
+      "events": [
+        {
+          "text": "先讲背景，去年同事算过81除以9。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "现在请用计算器算7加8。",
+          "at_ms": 1400,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-710"
+      },
+      "expect": {
+        "calc": "15"
+      },
+      "no_actions": false,
+      "not_before_event": 1
+    },
+    {
+      "id": "C12",
+      "group": "C",
+      "category": "early_partial_step",
+      "events": [
+        {
+          "text": "先在计算器里输入4，其他的我接着说。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "再乘以7，显示结果。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-711"
+      },
+      "expect": {
+        "calc": "28"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C13",
+      "group": "C",
+      "category": "explicit_revision",
+      "events": [
+        {
+          "text": "用计算器算12加7。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "刚才的不要了，重新算6乘8。",
+          "at_ms": 0,
+          "after_actions": 2,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-712"
+      },
+      "expect": {
+        "calc": "48"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C14",
+      "group": "C",
+      "category": "implicit_revision",
+      "events": [
+        {
+          "text": "计算器算9加3。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "加法是旧方案，现在需要9乘3。",
+          "at_ms": 0,
+          "during": "choice",
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-713"
+      },
+      "expect": {
+        "calc": "27"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C15",
+      "group": "C",
+      "category": "asr_replacement",
+      "events": [
+        {
+          "text": "计算器算9加2。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "计算器算9乘2。",
+          "at_ms": 0,
+          "segment": 0,
+          "during": "choice"
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-714"
+      },
+      "expect": {
+        "calc": "18"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C16",
+      "group": "C",
+      "category": "irrelevant_append",
+      "events": [
+        {
+          "text": "用计算器算8乘7。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "顺便说一下，这份预算是去年立的项目。",
+          "at_ms": 0,
+          "during": "choice",
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-715"
+      },
+      "expect": {
+        "calc": "56"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C17",
+      "group": "C",
+      "category": "long_background",
+      "events": [
+        {
+          "text": "背景第1段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第2段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第3段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第4段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第5段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第6段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第7段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第8段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第9段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第10段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第11段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第12段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第13段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第14段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第15段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第16段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第17段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第18段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第19段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第20段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第21段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第22段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第23段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第24段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第25段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第26段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第27段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第28段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第29段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第30段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第31段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第32段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第33段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第34段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第35段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "现在的任务是用计算器算14加6。",
+          "at_ms": 1000,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-716"
+      },
+      "expect": {
+        "calc": "20"
+      },
+      "no_actions": false,
+      "not_before_event": 1
+    },
+    {
+      "id": "C18",
+      "group": "C",
+      "category": "withdraw_before_action",
+      "events": [
+        {
+          "text": "等我想好再告诉你怎么算。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "计算这件事今天先不做了。",
+          "at_ms": 900,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-717"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "C19",
+      "group": "C",
+      "category": "pause_after_entry",
+      "events": [
+        {
+          "text": "计算器先输入8。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "就停在8，不要继续，我再想一下。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-718"
+      },
+      "expect": {
+        "calc": "8"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C20",
+      "group": "C",
+      "category": "deferred_equals",
+      "events": [
+        {
+          "text": "计算器输入7，先不要按等于。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "现在加2并按等于。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-719"
+      },
+      "expect": {
+        "calc": "9"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C21",
+      "group": "C",
+      "category": "new_goal_after_completion",
+      "events": [
+        {
+          "text": "计算器算2加3。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "前一项完成后，清空重新算4乘6。",
+          "at_ms": 0,
+          "after_actions": 4,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-720"
+      },
+      "expect": {
+        "calc": "24"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C22",
+      "group": "C",
+      "category": "double_revision",
+      "events": [
+        {
+          "text": "用计算器算3加5。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "换成4乘6。",
+          "at_ms": 0,
+          "during": "choice",
+          "segment": 1
+        },
+        {
+          "text": "最后确定用计算器算9减2。",
+          "at_ms": 1000,
+          "segment": 2
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-721"
+      },
+      "expect": {
+        "calc": "7"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C23",
+      "group": "C",
+      "category": "spoken_disfluency",
+      "events": [
+        {
+          "text": "那个那个计算器帮我算一下就是五加六对五加六",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-722"
+      },
+      "expect": {
+        "calc": "11"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C24",
+      "group": "C",
+      "category": "quoted_negation",
+      "events": [
+        {
+          "text": "旧说明写着“不要用计算器”，那是旧要求。现在请用计算器算8加9。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-723"
+      },
+      "expect": {
+        "calc": "17"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "C25",
+      "group": "C",
+      "category": "target_scope",
+      "events": [
+        {
+          "text": "只在计算器算7乘9，文本编辑和浏览器都保持原样。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-724"
+      },
+      "expect": {
+        "calc": "63"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T01",
+      "group": "T",
+      "category": "literal_write",
+      "events": [
+        {
+          "text": "把文本编辑测试文档的全部内容替换成：春风。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-725"
+      },
+      "expect": {
+        "text": "春风"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T02",
+      "group": "T",
+      "category": "multiline",
+      "events": [
+        {
+          "text": "文本编辑全文替换为两行，第一行甲方，第二行乙方。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-726"
+      },
+      "expect": {
+        "text": "甲方\n乙方"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T03",
+      "group": "T",
+      "category": "english",
+      "events": [
+        {
+          "text": "文本编辑全文替换为英文：Hello world。只写英文，不加句号。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-727"
+      },
+      "expect": {
+        "text": "Hello world"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T04",
+      "group": "T",
+      "category": "punctuation",
+      "events": [
+        {
+          "text": "文本编辑全文替换成：今天，天气很好！",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-728"
+      },
+      "expect": {
+        "text": "今天，天气很好！"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T05",
+      "group": "T",
+      "category": "append",
+      "events": [
+        {
+          "text": "在文本编辑现有的“项目记录”后另起一行追加“已完成”。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "项目记录",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-729"
+      },
+      "expect": {
+        "text": "项目记录\n已完成"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T06",
+      "group": "T",
+      "category": "replace_substring",
+      "events": [
+        {
+          "text": "把文本编辑里的“北京”改为“上海”，其余内容保留。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "北京项目已启动",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-730"
+      },
+      "expect": {
+        "text": "上海项目已启动"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T07",
+      "group": "T",
+      "category": "delete_part",
+      "events": [
+        {
+          "text": "文本编辑中删掉第二行，保留第一行。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "第一项\n第二项",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-731"
+      },
+      "expect": {
+        "text": "第一项"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T08",
+      "group": "T",
+      "category": "background",
+      "events": [
+        {
+          "text": "昨天我在文本编辑写过“春风”，现在只是回忆，没有让你改文档。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-732"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "T09",
+      "group": "T",
+      "category": "quote",
+      "events": [
+        {
+          "text": "我在念旧会议记录：“把文本编辑全文替换成春风。”先不要执行这句话。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-733"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "T10",
+      "group": "T",
+      "category": "missing_value",
+      "events": [
+        {
+          "text": "把文本编辑内容改成",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-734"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "T11",
+      "group": "T",
+      "category": "background_then_goal",
+      "events": [
+        {
+          "text": "我先解释一下，这个文档以前写的是旧计划。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "现在全文替换成：新计划。",
+          "at_ms": 1300,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-735"
+      },
+      "expect": {
+        "text": "新计划"
+      },
+      "no_actions": false,
+      "not_before_event": 1
+    },
+    {
+      "id": "T12",
+      "group": "T",
+      "category": "revision_after_write",
+      "events": [
+        {
+          "text": "文本编辑全文改成：北京。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "改口了，全文换成：上海。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-736"
+      },
+      "expect": {
+        "text": "上海"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T13",
+      "group": "T",
+      "category": "revision_during_generation",
+      "events": [
+        {
+          "text": "文本编辑全文替换成：第一版。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "现在最终改为：第二版。",
+          "at_ms": 0,
+          "during": "text",
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-737"
+      },
+      "expect": {
+        "text": "第二版"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T14",
+      "group": "T",
+      "category": "asr_replacement",
+      "events": [
+        {
+          "text": "文本编辑全文写成：蓝田。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "文本编辑全文写成：蓝天。",
+          "at_ms": 0,
+          "segment": 0,
+          "during": "choice"
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-738"
+      },
+      "expect": {
+        "text": "蓝天"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T15",
+      "group": "T",
+      "category": "irrelevant_append",
+      "events": [
+        {
+          "text": "文本编辑全文替换成：按时交付。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "顺便讲一下，这个项目去年就启动了。",
+          "at_ms": 0,
+          "during": "text",
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-739"
+      },
+      "expect": {
+        "text": "按时交付"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T16",
+      "group": "T",
+      "category": "long_background",
+      "events": [
+        {
+          "text": "背景第1段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第2段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第3段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第4段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第5段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第6段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第7段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第8段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第9段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第10段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第11段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第12段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第13段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第14段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第15段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第16段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第17段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第18段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第19段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第20段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第21段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第22段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第23段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第24段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第25段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第26段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第27段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第28段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第29段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第30段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第31段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第32段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第33段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第34段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第35段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "现在文本编辑全文写成：确认完成。",
+          "at_ms": 1100,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-740"
+      },
+      "expect": {
+        "text": "确认完成"
+      },
+      "no_actions": false,
+      "not_before_event": 1
+    },
+    {
+      "id": "T17",
+      "group": "T",
+      "category": "cancel",
+      "events": [
+        {
+          "text": "文本编辑先别动，我还没想好写什么。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "今天不改这个文档了。",
+          "at_ms": 800,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-741"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "T18",
+      "group": "T",
+      "category": "pause_after_write",
+      "events": [
+        {
+          "text": "文本编辑全文改成：草稿。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "先停在草稿，后面我还没决定。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-742"
+      },
+      "expect": {
+        "text": "草稿"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T19",
+      "group": "T",
+      "category": "two_steps",
+      "events": [
+        {
+          "text": "文本编辑全文写成：第一行。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "再另起一行追加：第二行。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-743"
+      },
+      "expect": {
+        "text": "第一行\n第二行"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T20",
+      "group": "T",
+      "category": "literal_negative",
+      "events": [
+        {
+          "text": "文本编辑全文只写这六个字：不要修改内容。这里引号里的意思是文档文字。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-744"
+      },
+      "expect": {
+        "text": "不要修改内容"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T21",
+      "group": "T",
+      "category": "literal_code",
+      "events": [
+        {
+          "text": "文本编辑全文写入这段普通文本，不执行它：print(42)",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-745"
+      },
+      "expect": {
+        "text": "print(42)"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T22",
+      "group": "T",
+      "category": "idempotent_repeat",
+      "events": [
+        {
+          "text": "文本编辑全文替换成：唯一内容。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "再确认一下，全文就是唯一内容，不要追加第二遍。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-746"
+      },
+      "expect": {
+        "text": "唯一内容"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T23",
+      "group": "T",
+      "category": "disfluent",
+      "events": [
+        {
+          "text": "那个文本编辑你就把原来的全换掉写四个字山清水秀就这样",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-747"
+      },
+      "expect": {
+        "text": "山清水秀"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T24",
+      "group": "T",
+      "category": "partial_cancel",
+      "events": [
+        {
+          "text": "文本编辑先全文写成“会议记录”，原来准备追加的“待确认”不用写了。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-748"
+      },
+      "expect": {
+        "text": "会议记录"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "T25",
+      "group": "T",
+      "category": "many_asr_updates",
+      "events": [
+        {
+          "text": "文本编辑先不要写，我想一下。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "文本编辑先不要写，我正在想最终要写什么。",
+          "at_ms": 180,
+          "segment": 0
+        },
+        {
+          "text": "文本编辑先不要写，我正在想最终要写什么。。",
+          "at_ms": 360,
+          "segment": 0
+        },
+        {
+          "text": "文本编辑先不要写，我正在想最终要写什么。。。",
+          "at_ms": 540,
+          "segment": 0
+        },
+        {
+          "text": "文本编辑先不要写，我正在想最终要写什么。。。。",
+          "at_ms": 720,
+          "segment": 0
+        },
+        {
+          "text": "文本编辑先不要写，我正在想最终要写什么。。。。。",
+          "at_ms": 900,
+          "segment": 0
+        },
+        {
+          "text": "文本编辑先不要写，我正在想最终要写什么。。。。。。",
+          "at_ms": 1080,
+          "segment": 0
+        },
+        {
+          "text": "确定了，文本编辑全文写成：终稿。",
+          "at_ms": 1500,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-749"
+      },
+      "expect": {
+        "text": "终稿"
+      },
+      "no_actions": false,
+      "not_before_event": 7
+    },
+    {
+      "id": "B01",
+      "group": "B",
+      "category": "search",
+      "events": [
+        {
+          "text": "在浏览器实验网页搜索海鸥。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-750"
+      },
+      "expect": {
+        "browser": {
+          "query": "海鸥",
+          "last_search": "海鸥",
+          "search_count": 1
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B02",
+      "group": "B",
+      "category": "fill_without_submit",
+      "events": [
+        {
+          "text": "浏览器关键词填山川就行，先别点搜索。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-751"
+      },
+      "expect": {
+        "browser": {
+          "query": "山川",
+          "search_count": 0
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B03",
+      "group": "B",
+      "category": "checkbox",
+      "events": [
+        {
+          "text": "浏览器只勾选包含归档，先不搜索。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-752"
+      },
+      "expect": {
+        "browser": {
+          "archived": true,
+          "search_count": 0
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B04",
+      "group": "B",
+      "category": "filter_and_search",
+      "events": [
+        {
+          "text": "浏览器搜索星空，同时勾选包含归档。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-753"
+      },
+      "expect": {
+        "browser": {
+          "query": "星空",
+          "archived": true,
+          "last_search": "星空",
+          "search_count": 1,
+          "last_search_archived": true
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B05",
+      "group": "B",
+      "category": "write_note",
+      "events": [
+        {
+          "text": "浏览器备注填入：待处理。先不要保存。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-754"
+      },
+      "expect": {
+        "browser": {
+          "note": "待处理",
+          "saved": ""
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B06",
+      "group": "B",
+      "category": "save_note",
+      "events": [
+        {
+          "text": "浏览器备注写入“已审核”，然后保存备注。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-755"
+      },
+      "expect": {
+        "browser": {
+          "note": "已审核",
+          "saved": "已审核"
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B07",
+      "group": "B",
+      "category": "navigation",
+      "events": [
+        {
+          "text": "浏览器打开资料详情，停在详情。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-756"
+      },
+      "expect": {
+        "browser": {
+          "detail": true
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B08",
+      "group": "B",
+      "category": "background",
+      "events": [
+        {
+          "text": "昨天我在浏览器搜索海鸥，后来没找到。这里只是背景，现在先别操作。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-757"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "B09",
+      "group": "B",
+      "category": "quoted_command",
+      "events": [
+        {
+          "text": "我在复述同事的话：“勾选包含归档然后搜索星空。”我还没让你执行。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-758"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "B10",
+      "group": "B",
+      "category": "missing_query",
+      "events": [
+        {
+          "text": "在浏览器搜索",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-759"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "B11",
+      "group": "B",
+      "category": "background_then_goal",
+      "events": [
+        {
+          "text": "我先说背景，之前的资料已经整理过。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "现在浏览器搜索森林。",
+          "at_ms": 1300,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-760"
+      },
+      "expect": {
+        "browser": {
+          "query": "森林",
+          "last_search": "森林",
+          "search_count": 1
+        }
+      },
+      "no_actions": false,
+      "not_before_event": 1
+    },
+    {
+      "id": "B12",
+      "group": "B",
+      "category": "revise_after_fill",
+      "events": [
+        {
+          "text": "浏览器关键词先填北京，先别搜索。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "改成上海，现在搜索。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-761"
+      },
+      "expect": {
+        "browser": {
+          "query": "上海",
+          "last_search": "上海",
+          "search_count": 1
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B13",
+      "group": "B",
+      "category": "revise_during_text",
+      "events": [
+        {
+          "text": "浏览器关键词填入海浪，不搜索。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "最终填山峰，不搜索。",
+          "at_ms": 0,
+          "during": "text",
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-762"
+      },
+      "expect": {
+        "browser": {
+          "query": "山峰",
+          "search_count": 0
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B14",
+      "group": "B",
+      "category": "asr_revision",
+      "events": [
+        {
+          "text": "浏览器搜索蓝田。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "浏览器搜索蓝天。",
+          "at_ms": 0,
+          "segment": 0,
+          "during": "choice"
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-763"
+      },
+      "expect": {
+        "browser": {
+          "query": "蓝天",
+          "last_search": "蓝天",
+          "search_count": 1
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B15",
+      "group": "B",
+      "category": "irrelevant_append",
+      "events": [
+        {
+          "text": "浏览器搜索白云。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "我顺便说一下，我昨天才收到这份资料。",
+          "at_ms": 0,
+          "during": "choice",
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-764"
+      },
+      "expect": {
+        "browser": {
+          "query": "白云",
+          "last_search": "白云",
+          "search_count": 1
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B16",
+      "group": "B",
+      "category": "long_background",
+      "events": [
+        {
+          "text": "背景第1段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第2段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第3段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第4段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第5段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第6段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第7段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第8段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第9段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第10段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第11段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第12段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第13段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第14段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第15段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第16段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第17段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第18段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第19段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第20段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第21段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第22段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第23段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第24段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第25段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第26段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第27段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第28段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第29段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第30段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第31段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第32段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第33段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第34段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第35段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "现在只在浏览器关键词填远山，不点搜索。",
+          "at_ms": 1000,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-765"
+      },
+      "expect": {
+        "browser": {
+          "query": "远山",
+          "search_count": 0
+        }
+      },
+      "no_actions": false,
+      "not_before_event": 1
+    },
+    {
+      "id": "B17",
+      "group": "B",
+      "category": "cancel",
+      "events": [
+        {
+          "text": "浏览器先不操作，今天不查资料了。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-766"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "B18",
+      "group": "B",
+      "category": "cancel_submit",
+      "events": [
+        {
+          "text": "浏览器关键词填日出，先不要搜索。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "今天不搜索了，保持填好的关键词就行。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-767"
+      },
+      "expect": {
+        "browser": {
+          "query": "日出",
+          "search_count": 0
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B19",
+      "group": "B",
+      "category": "later_submit",
+      "events": [
+        {
+          "text": "浏览器关键词填月色，先不要搜索。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "现在可以搜索了。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-768"
+      },
+      "expect": {
+        "browser": {
+          "query": "月色",
+          "last_search": "月色",
+          "search_count": 1
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B20",
+      "group": "B",
+      "category": "literal_negative",
+      "events": [
+        {
+          "text": "浏览器备注只填“不要搜索”，这是要写的文字，不是让你点搜索。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-769"
+      },
+      "expect": {
+        "browser": {
+          "note": "不要搜索",
+          "search_count": 0
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B21",
+      "group": "B",
+      "category": "idempotent_toggle",
+      "events": [
+        {
+          "text": "浏览器的包含归档已经勾选，保持勾选并搜索晨光。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": true,
+        "code": "星河-770"
+      },
+      "expect": {
+        "browser": {
+          "query": "晨光",
+          "archived": true,
+          "last_search": "晨光",
+          "search_count": 1
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B22",
+      "group": "B",
+      "category": "two_fields",
+      "events": [
+        {
+          "text": "浏览器关键词填海风，备注填稍后处理。两个字段填好就行，不搜索不保存。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-771"
+      },
+      "expect": {
+        "browser": {
+          "query": "海风",
+          "note": "稍后处理",
+          "search_count": 0,
+          "saved": ""
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B23",
+      "group": "B",
+      "category": "clear_observed",
+      "events": [
+        {
+          "text": "点击浏览器的清空搜索按钮，让关键词恢复为空。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "旧关键词",
+        "note": "",
+        "archived": false,
+        "code": "星河-772"
+      },
+      "expect": {
+        "browser": {
+          "query": "",
+          "search_count": 0
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B24",
+      "group": "B",
+      "category": "disfluent",
+      "events": [
+        {
+          "text": "那个浏览器你先查一下就是搜索那个松林对松林",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-773"
+      },
+      "expect": {
+        "browser": {
+          "query": "松林",
+          "last_search": "松林",
+          "search_count": 1
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "B25",
+      "group": "B",
+      "category": "field_scope",
+      "events": [
+        {
+          "text": "只改浏览器备注为“春雨”，关键词保持“秋风”，别搜索。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "秋风",
+        "note": "",
+        "archived": false,
+        "code": "星河-774"
+      },
+      "expect": {
+        "browser": {
+          "query": "秋风",
+          "note": "春雨",
+          "search_count": 0
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X01",
+      "group": "X",
+      "category": "calc_to_text",
+      "events": [
+        {
+          "text": "先用计算器算7乘8，再把结果数字作为文本编辑全文。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-775"
+      },
+      "expect": {
+        "calc": "56",
+        "text": "56"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X02",
+      "group": "X",
+      "category": "calc_to_browser",
+      "events": [
+        {
+          "text": "先用计算器算9加6，再在浏览器搜索计算结果数字。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-776"
+      },
+      "expect": {
+        "calc": "15",
+        "browser": {
+          "query": "15",
+          "last_search": "15",
+          "search_count": 1
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X03",
+      "group": "X",
+      "category": "text_to_browser",
+      "events": [
+        {
+          "text": "读取文本编辑里的内容，在浏览器搜索完全相同的文字。文本编辑不改。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "山海图",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-777"
+      },
+      "expect": {
+        "browser": {
+          "query": "山海图",
+          "last_search": "山海图",
+          "search_count": 1
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X04",
+      "group": "X",
+      "category": "browser_to_text",
+      "events": [
+        {
+          "text": "把浏览器资料卡显示的校验码写入文本编辑，全文只保留码本身。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-778"
+      },
+      "expect": {
+        "text": "星河-778"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X05",
+      "group": "X",
+      "category": "text_to_calc",
+      "events": [
+        {
+          "text": "按文本编辑里的算式在计算器计算，保留文本编辑不变。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "8+12",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-779"
+      },
+      "expect": {
+        "calc": "20"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X06",
+      "group": "X",
+      "category": "browser_to_calc",
+      "events": [
+        {
+          "text": "按浏览器备注中的算式使用计算器计算，不改浏览器。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "6×7",
+        "archived": false,
+        "code": "星河-780"
+      },
+      "expect": {
+        "calc": "42"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X07",
+      "group": "X",
+      "category": "three_apps",
+      "events": [
+        {
+          "text": "用计算器算6乘9，把结果数字写成文本编辑全文，再用浏览器搜索这个数字。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-781"
+      },
+      "expect": {
+        "calc": "54",
+        "text": "54",
+        "browser": {
+          "query": "54",
+          "last_search": "54",
+          "search_count": 1
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X08",
+      "group": "X",
+      "category": "two_writes",
+      "events": [
+        {
+          "text": "文本编辑全文写成“甲方”，浏览器备注写成“乙方”，不保存备注。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-782"
+      },
+      "expect": {
+        "text": "甲方",
+        "browser": {
+          "note": "乙方",
+          "saved": ""
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X09",
+      "group": "X",
+      "category": "switch_target_before_write",
+      "events": [
+        {
+          "text": "把“新地址”写入文本编辑，替换全文。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "放到浏览器备注里就行，文本编辑不要改。",
+          "at_ms": 0,
+          "during": "choice",
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-783"
+      },
+      "expect": {
+        "browser": {
+          "note": "新地址"
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X10",
+      "group": "X",
+      "category": "switch_target_during_text",
+      "events": [
+        {
+          "text": "文本编辑全文写成“资料齐全”。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "这句话放浏览器备注，文本编辑保持原样。",
+          "at_ms": 0,
+          "during": "text",
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-784"
+      },
+      "expect": {
+        "browser": {
+          "note": "资料齐全"
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X11",
+      "group": "X",
+      "category": "cancel_later_app",
+      "events": [
+        {
+          "text": "计算器先输入8，之后我再说文本编辑要写什么。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "文本编辑不用动，计算器保持8。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-785"
+      },
+      "expect": {
+        "calc": "8"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X12",
+      "group": "X",
+      "category": "background_three_apps",
+      "events": [
+        {
+          "text": "以前同事先用计算器算账，再写文本编辑，最后浏览器搜索。这里只是介绍旧流程，现在没有操作任务。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-786"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "X13",
+      "group": "X",
+      "category": "missing_destination",
+      "events": [
+        {
+          "text": "我想把这份内容放到另外一个应用里，但还没决定放哪儿，先别动。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-787"
+      },
+      "expect": {},
+      "no_actions": true
+    },
+    {
+      "id": "X14",
+      "group": "X",
+      "category": "sequential_new_request",
+      "events": [
+        {
+          "text": "文本编辑全文写成“出发”。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "接下来浏览器关键词填“到达”，先不搜索。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-788"
+      },
+      "expect": {
+        "text": "出发",
+        "browser": {
+          "query": "到达",
+          "search_count": 0
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X15",
+      "group": "X",
+      "category": "revise_after_cross_step",
+      "events": [
+        {
+          "text": "文本编辑全文写成“旧方案”。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "文本编辑保持旧方案，在浏览器备注写“新方案”。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-789"
+      },
+      "expect": {
+        "text": "旧方案",
+        "browser": {
+          "note": "新方案"
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X16",
+      "group": "X",
+      "category": "preserve_source",
+      "events": [
+        {
+          "text": "把文本编辑的“保留原文”复制到浏览器备注并保存，源文档不要改。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "保留原文",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-790"
+      },
+      "expect": {
+        "browser": {
+          "note": "保留原文",
+          "saved": "保留原文"
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X17",
+      "group": "X",
+      "category": "reverse_copy",
+      "events": [
+        {
+          "text": "把浏览器备注原样写成文本编辑全文，浏览器不变。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "完整记录",
+        "archived": false,
+        "code": "星河-791"
+      },
+      "expect": {
+        "text": "完整记录"
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X18",
+      "group": "X",
+      "category": "cross_asr_replacement",
+      "events": [
+        {
+          "text": "文本编辑全文写成“晴天”。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "浏览器备注写成“晴天”。",
+          "at_ms": 0,
+          "segment": 0,
+          "during": "choice"
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-792"
+      },
+      "expect": {
+        "browser": {
+          "note": "晴天"
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X19",
+      "group": "X",
+      "category": "long_then_cross",
+      "events": [
+        {
+          "text": "背景第1段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第2段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第3段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第4段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第5段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第6段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第7段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第8段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第9段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第10段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第11段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第12段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第13段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第14段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第15段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第16段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第17段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第18段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第19段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第20段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第21段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第22段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第23段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第24段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第25段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第26段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第27段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第28段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第29段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第30段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第31段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第32段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第33段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第34段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。 背景第35段：去年团队在北京上海之间讨论预算，也用过计算器、文本编辑和浏览器，旧会议记录提到搜索与保存；这里复述的都是历史情况。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "文本编辑全文写“核对”，浏览器备注写“完成”。",
+          "at_ms": 1200,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-793"
+      },
+      "expect": {
+        "text": "核对",
+        "browser": {
+          "note": "完成"
+        }
+      },
+      "no_actions": false,
+      "not_before_event": 1
+    },
+    {
+      "id": "X20",
+      "group": "X",
+      "category": "cross_irrelevant_append",
+      "events": [
+        {
+          "text": "文本编辑全文写“山川”，再用浏览器搜索山川。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "顺便说一下，这个流程去年已经讨论过了。",
+          "at_ms": 0,
+          "during": "text",
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-794"
+      },
+      "expect": {
+        "text": "山川",
+        "browser": {
+          "query": "山川",
+          "last_search": "山川",
+          "search_count": 1
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X21",
+      "group": "X",
+      "category": "two_distinct_values",
+      "events": [
+        {
+          "text": "文本编辑全文写“北京”，浏览器关键词填“上海”，不要混在一起，先不搜索。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-795"
+      },
+      "expect": {
+        "text": "北京",
+        "browser": {
+          "query": "上海",
+          "search_count": 0
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X22",
+      "group": "X",
+      "category": "source_revision_then_copy",
+      "events": [
+        {
+          "text": "文本编辑全文写“初稿”。",
+          "at_ms": 0,
+          "segment": 0
+        },
+        {
+          "text": "全文换成“终稿”，再把终稿填到浏览器备注。",
+          "at_ms": 0,
+          "after_actions": 1,
+          "segment": 1
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-796"
+      },
+      "expect": {
+        "text": "终稿",
+        "browser": {
+          "note": "终稿"
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X23",
+      "group": "X",
+      "category": "browser_detail_to_text",
+      "events": [
+        {
+          "text": "浏览器打开资料详情，再把详情里的负责人姓名写成文本编辑全文。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-797"
+      },
+      "expect": {
+        "text": "林舟",
+        "browser": {
+          "detail": true
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X24",
+      "group": "X",
+      "category": "independent_three_tasks",
+      "events": [
+        {
+          "text": "计算器输入5，文本编辑全文写“记录”，浏览器勾选包含归档。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-798"
+      },
+      "expect": {
+        "calc": "5",
+        "text": "记录",
+        "browser": {
+          "archived": true
+        }
+      },
+      "no_actions": false
+    },
+    {
+      "id": "X25",
+      "group": "X",
+      "category": "explicit_partial_cancellation",
+      "events": [
+        {
+          "text": "原来准备在三个应用都操作，现在只把文本编辑全文写成“已取消”，计算器和浏览器保持原样。",
+          "at_ms": 0,
+          "segment": 0
+        }
+      ],
+      "initial": {
+        "calc": "0",
+        "text": "初始文本",
+        "query": "",
+        "note": "",
+        "archived": false,
+        "code": "星河-799"
+      },
+      "expect": {
+        "text": "已取消"
+      },
+      "no_actions": false
+    }
+  ]
+}

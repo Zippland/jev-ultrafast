@@ -9,12 +9,24 @@ from pathlib import Path
 from browser_harness.admin import ensure_daemon
 from browser_harness.helpers import cdp
 
+from .actions import parameter_values
+from .tracing import CURRENT_TRACE, traced_call
+
+
+def traced_cdp(method, **params):
+    return traced_call(CURRENT_TRACE.get(), "cdp", {"method": method, "params": params},
+                       lambda: cdp(method, **params))
+
 # Atomically read visible content and controls, preserving actual DOM node identity.
 READ_STATE = Path(__file__).with_name("snapshot.js").read_text()
 MARKER = f"(() => {{ const state={READ_STATE}; return state?.marker ?? null; }})()"
 
 class StalePage(ValueError):
     """A decision no longer refers to the observed page."""
+
+
+class DispatchCancelled(StalePage):
+    """Input changed or execution paused before any mutation was dispatched."""
 
 
 class Browser:
@@ -33,7 +45,7 @@ class Browser:
             time.sleep(0.02)
 
     def call(self, method, **params):
-        return cdp(method, session_id=self.session, **params)
+        return traced_cdp(method, session_id=self.session, **params)
 
     def evaluate(self, expression):
         response = self.call("Runtime.evaluate", expression=expression, returnByValue=True)
@@ -97,12 +109,13 @@ class Browser:
             return current == [page["page_key"], page["guards"].get(str(node))]
         return self.evaluate(MARKER) == page["marker"]
 
-    def act(self, action, page, text=None):
+    def act(self, action, page, text=None, before_dispatch=None):
         if not self.fresh(page, action):
             raise StalePage("Page changed since this decision. Observe again.")
         if action["kind"] == "wait":
             time.sleep(0.1)
-        result = browser_operation({"operation": "act", "session": self.session, "action": action, "text": text})
+        result = browser_operation({"operation": "act", "session": self.session, "action": action,
+                                    "text": text, "before_dispatch": before_dispatch})
         self.after_input = action if action["kind"] != "wait" else None
         return result
 
@@ -122,7 +135,7 @@ def browser_operation(request):
     session = request["session"]
 
     def call(method, **params):
-        return cdp(method, session_id=session, **params)
+        return traced_cdp(method, session_id=session, **params)
 
     def evaluate(expression):
         result = call("Runtime.evaluate", expression=expression, returnByValue=True)
@@ -135,12 +148,16 @@ def browser_operation(request):
     if operation == "act":
         action = request["action"]
         kind = action["kind"]
+        before_dispatch = request.get("before_dispatch") or (lambda: None)
         if kind == "scroll":
+            before_dispatch()
             call("Input.dispatchMouseEvent", type="mouseWheel", x=550, y=650, deltaX=0, deltaY=action["delta"])
         elif kind != "wait":
             if type(action["node"]) is not int:
                 raise ValueError("Invalid observed node")
             # Code-owned node IDs refer to actual observed elements, never model-generated selectors.
+            if kind == "select":
+                before_dispatch()  # SELECT mutates in the evaluation itself.
             target = evaluate("""(action => {
               const e=window.__jevFast?.nodes.get(action.node);
               if (!e?.isConnected || e.matches(':disabled') || e.closest('[aria-disabled="true"],[inert]') ||
@@ -163,9 +180,13 @@ def browser_operation(request):
                     raise RuntimeError("Dropdown execution was not confirmed; inspect before retrying.")
                 raise StalePage("Target changed or is covered. Observe again.")
             if kind != "select":
+                before_dispatch()
                 x, y = target["x"], target["y"]
-                for event in ("mousePressed", "mouseReleased"):
-                    call("Input.dispatchMouseEvent", type=event, x=x, y=y, button="left", clickCount=1)
+                style = parameter_values(action).get("style", "left")
+                button = "left" if style == "double" else style
+                for count in ((1, 2) if style == "double" else (1,)):
+                    for event in ("mousePressed", "mouseReleased"):
+                        call("Input.dispatchMouseEvent", type=event, x=x, y=y, button=button, clickCount=count)
                 if kind == "fill":
                     call(
                         "Input.dispatchKeyEvent",

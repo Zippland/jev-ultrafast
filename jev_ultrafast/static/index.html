@@ -34,7 +34,14 @@
             <option value="flights">Google Flights · real web</option>
             <option value="travel">Travel planner · fixture</option>
             <option value="research">Reading room · fixture</option>
+            <option value="computer">Computer Use · native apps (MCP)</option>
           </select>
+        </div>
+        <div id="computer-options" class="computer-options" hidden>
+          <label>Application <select id="cu-app" aria-label="CU application"></select></label>
+          <label>Window <select id="cu-window" aria-label="CU window"></select></label>
+          <button type="button" id="cu-refresh">Refresh apps</button>
+          <small>Open the app and keep the CU console running. This run controls only the selected window.</small>
         </div>
         <div class="task-row">
           <textarea id="goal" name="goal" rows="5">
@@ -57,6 +64,7 @@ Find one-way flights from Zurich to London on September 20, 2026, for one adult 
           ><button type="button" id="execute" disabled>Execute choice</button
           ><button type="button" id="auto" disabled>Run automatically</button
           ><button type="button" id="stop" hidden>Pause</button>
+          <button type="button" id="disconnect" disabled>End session</button>
         </div>
       </div>
       <div id="error" role="alert" hidden></div>
@@ -78,14 +86,14 @@ Find one-way flights from Zurich to London on September 20, 2026, for one adult 
             </div>
             <img
               id="screenshot"
-              alt="Live screenshot of the controlled browser"
+              alt="Latest screenshot of the controlled window"
               hidden
             />
             <div id="targets"></div>
           </div>
           <div class="browser-footer">
             <span id="page-title">Isolated demo tab</span
-            ><span>AX tree → typed actions → CDP</span>
+            ><span id="execution-path">DOM → typed actions → CDP</span>
           </div>
         </div>
         <aside>

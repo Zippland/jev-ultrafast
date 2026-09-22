@@ -157,6 +157,21 @@ def test_missing_text_credential_stops_before_guessing(monkeypatch):
         model.field_text({"goal": 'Enter "Zurich"'})
 
 
+def test_openrouter_requires_schema_support_and_still_rejects_malformed_output(monkeypatch):
+    monkeypatch.setenv("TEXT_MODEL_API_KEY", "test")
+    monkeypatch.setenv("TEXT_MODEL_BASE_URL", "https://openrouter.ai/api/v1")
+    post = Mock(return_value={"choices": [{"message": {"content": 'Explanation\n{"text":"Zurich"}'}}]})
+    monkeypatch.setattr(model, "post_json", post)
+    with pytest.raises(ValueError, match="nothing typed"):
+        model.field_text({"goal": "Zurich"})
+    assert post.call_count == 1
+    request = post.call_args.args[2]
+    assert request["provider"] == {"require_parameters": True}
+    schema = request["response_format"]["json_schema"]
+    assert schema["strict"] and schema["schema"]["additionalProperties"] is False
+    assert schema["schema"]["required"] == ["text"]
+
+
 @pytest.fixture
 def runner():
     a = loop.Agent.__new__(loop.Agent)
@@ -318,3 +333,63 @@ def test_navigation_during_prediction_reobserves_without_action(runner):
     assert runner.state["status"] == "ready"
     assert runner.state["decision"] is None
     runner.state["browser"].act.assert_not_called()
+
+
+@pytest.mark.parametrize('content', [
+    '{"text":"https://www.google.com"}',
+    '{"text":"https://www.google.com"}\n```',
+    '```json\n{"text":"https://www.google.com"}\n```',
+    '```\n{"text":"https://www.google.com"}\n```',
+])
+def test_text_argument_accepts_only_json_with_optional_markdown_framing(content):
+    assert model.parse_text_argument(content) == 'https://www.google.com'
+
+
+@pytest.mark.parametrize('content', [
+    'Here is the result: {"text":"x"}', '{"text":"x"}\nExplanation',
+    '{"text":"x"}{"text":"y"}', '{"text":null}', '{"text":""}',
+    '{"text":"x","action":"click"}',
+])
+def test_text_argument_does_not_extract_values_from_invalid_payloads(content):
+    with pytest.raises(ValueError):
+        model.parse_text_argument(content)
+
+
+def test_text_argument_preserves_literal_markdown_inside_value():
+    value = '```python\nprint("hello")\n```'
+    assert model.parse_text_argument(json.dumps({'text': value})) == value
+
+
+def test_text_helper_preserves_explicit_abstention(monkeypatch):
+    monkeypatch.setenv("TEXT_MODEL_API_KEY", "test")
+    monkeypatch.setattr(model, "post_json", Mock(return_value={
+        "choices": [{"message": {"content": '{"text":null}'}}]}))
+    with pytest.raises(model.MissingTextArgument):
+        model.field_text({"goal": "Write"})
+    with pytest.raises(ValueError) as malformed:
+        model.parse_text_argument('{"text":null,"extra":true}')
+    assert not isinstance(malformed.value, model.MissingTextArgument)
+
+
+def test_text_truncation_regenerates_once_without_accepting_partial_json(monkeypatch):
+    monkeypatch.setenv('TEXT_MODEL_API_KEY', 'test')
+    post = Mock(side_effect=[
+        {'choices': [{'finish_reason': 'length', 'message': {'content': '{"text":"partial"}'}}]},
+        {'choices': [{'finish_reason': 'stop', 'message': {'content': '{"text":"complete"}'}}]},
+    ])
+    monkeypatch.setattr(model, 'post_json', post)
+    value, detail = model.field_text({'goal': 'Write'})
+    assert value == 'complete' and detail['attempts'] == 2
+    first, second = [call.args[2] for call in post.call_args_list]
+    assert first['messages'] == second['messages']
+    assert first['max_tokens'] == 1024 and second['max_tokens'] == 2048
+
+
+def test_repeated_truncation_is_bounded_even_with_valid_json(monkeypatch):
+    monkeypatch.setenv('TEXT_MODEL_API_KEY', 'test')
+    post = Mock(return_value={'choices': [{'native_finish_reason': 'length',
+                                          'message': {'content': '{"text":"partial"}'}}]})
+    monkeypatch.setattr(model, 'post_json', post)
+    with pytest.raises(ValueError, match='nothing typed'):
+        model.field_text({'goal': 'Write'})
+    assert post.call_count == 2

@@ -4,6 +4,7 @@ let state = null,
   busy = false,
   automatic = false;
 const goals = {
+  computer: '使用计算器计算 1234 × 2345，停在显示计算结果的界面。',
   flights: 'Find one-way flights from Zurich to London on September 20, 2026, for one adult in economy. Stop when matching flight options are visible. Do not select or book a flight.',
   travel: 'Find a Design stay in Lisbon with Free cancellation and open Casa Flora.',
   research:
@@ -18,7 +19,7 @@ const escape = (value) =>
       ],
   );
 const percent = (value) => `${(value * 100).toFixed(value < 0.01 ? 1 : 0)}%`;
-async function call(name, body = {}) {
+async function request(name, body = {}) {
   const response = await fetch(`/api/${name}`, {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-Demo-Token": token },
@@ -26,13 +27,17 @@ async function call(name, body = {}) {
   });
   const data = await response.json();
   if (!response.ok) throw Error(data.error || "Request failed");
+  return data;
+}
+async function call(name, body = {}) {
+  const data = await request(name, body);
   state = data;
   render();
   return data;
 }
 function controls() {
   const live = state?.page && !["done", "blocked"].includes(state.status);
-  $("start").disabled = busy;
+  $("start").disabled = busy || ($("scenario").value === "computer" && !$("cu-window").value);
   $("scenario").disabled = busy;
   $("goal").disabled = busy;
   $("choose").disabled = busy || !live;
@@ -41,6 +46,24 @@ function controls() {
   $("auto").hidden = automatic;
   $("stop").hidden = !automatic;
   $("download").disabled = !state?.history?.length;
+  $("disconnect").disabled = busy || !state?.page;
+  for (const id of ["cu-app", "cu-window", "cu-refresh"]) $(id).disabled = busy;
+}
+async function loadWindows() {
+  $("cu-window").innerHTML = '<option value="">Select a window</option>';
+  if (!$("cu-app").value) return;
+  const { windows } = await request("cu_windows", { app: $("cu-app").value });
+  for (const w of windows) $("cu-window").add(new Option(`${w.title || 'Untitled'} · ${w.window_id}`, w.window_id));
+  if (windows.length === 1) $("cu-window").value = String(windows[0].window_id);
+  $("status").textContent = windows.length ? "Select a window, then start" : "No windows · open the app and refresh";
+}
+async function loadApps() {
+  $("cu-app").innerHTML = '<option value="">Select an application</option>';
+  $("cu-window").innerHTML = '<option value="">Select a window</option>';
+  const { apps } = await request("cu_apps");
+  for (const app of apps) $("cu-app").add(new Option(app.name || app.id, app.id));
+  if (apps.some(app => app.id === "com.apple.calculator")) $("cu-app").value = "com.apple.calculator";
+  await loadWindows();
 }
 async function perform(fn, label) {
   if (busy) return;
@@ -88,12 +111,27 @@ function render() {
   };
   $("status").textContent = labels[state.status] || state.status;
   if (!page) {
+    $("viewport").removeAttribute("style");
+    $("empty").hidden = false;
+    $("screenshot").hidden = true;
+    $("screenshot").removeAttribute("src");
+    for (const id of ["targets", "choices", "operation-choices", "history"]) $(id).replaceChildren();
+    $("url").textContent = "No active session";
+    $("page-title").textContent = "Select a task to begin";
+    $("choice-title").textContent = "Waiting for a window";
+    $("action-count").textContent = "0 elements";
+    $("step-count").textContent = "0 actions";
+    for (const id of ["latency", "confidence", "completion"]) $(id).textContent = "—";
+    $("model-state").textContent = "Start a demo to inspect its structured state.";
     controls();
     return;
   }
   $("empty").hidden = true;
-  $("screenshot").hidden = false;
-  $("screenshot").src = `data:image/jpeg;base64,${page.screenshot}`;
+  $("viewport").style.aspectRatio = `${page.w} / ${page.h}`;
+  $("viewport").style.width = page.backend === "cu" ? `min(100%, ${520 * page.w / page.h}px)` : "100%";
+  $("screenshot").hidden = !page.screenshot;
+  if (page.screenshot) $("screenshot").src = `data:${page.screenshot_mime || 'image/jpeg'};base64,${page.screenshot}`;
+  $("execution-path").textContent = page.backend === "cu" ? "AX tree → Jev → CU MCP" : "DOM → typed actions → CDP";
   $("url").textContent = page.url;
   $("page-title").textContent = page.title;
   $("action-count").textContent = `${state.elements.length} elements`;
@@ -118,9 +156,10 @@ function render() {
     return `<div class="choice ${selectedIndex === e.index ? 'best' : ''}" data-action="${escape(e.index)}"><span class="choice-id">[${escape(e.index)}]</span><div class="choice-label">${escape(e.label)}<small>${escape(e.role)} · ${escape(e.operations.join(' / '))}${e.value ? ' · '+escape(e.value) : ''}${e.checked !== undefined ? ' · checked '+escape(e.checked) : ''}</small>${p >= 0 ? `<div class="bar" style="--probability:${p*100}%"></div>` : ''}</div><span class="probability">${p >= 0 ? percent(p) : '—'}</span></div>`;
   }).join('');
   const targets = new Map();
-  for (const a of page.actions) if (a.rect && !targets.has(a.node)) targets.set(a.node, a);
+  for (const a of page.actions) if (a.node !== undefined && !targets.has(a.node)) targets.set(a.node, a);
   $("targets").innerHTML = [...targets.values()].map((a,i) => {
     const index=String(i+1);
+    if (!a.rect) return '';
     return `<div class="target ${index === selectedIndex ? 'selected' : ''}" data-action="${index}" style="left:${100*a.rect.x/page.w}%;top:${100*a.rect.y/page.h}%;width:${100*a.rect.w/page.w}%;height:${100*a.rect.h/page.h}%"><span>${index}</span></div>`;
   }).join('');
   $("targets").hidden = !$("overlays").checked;
@@ -150,13 +189,21 @@ $("task-form").addEventListener("submit", (event) => {
   automatic = false;
   perform(
     () =>
-      call("reset", { scenario: $("scenario").value, goal: $("goal").value }),
-    "Opening a fresh browser…",
+      call("reset", { scenario: $("scenario").value, goal: $("goal").value,
+        app: $("cu-app").value, window_id: Number($("cu-window").value) || null }),
+    "Starting a fresh session…",
   );
 });
 $("scenario").addEventListener("change", () => {
   $("goal").value = goals[$("scenario").value];
+  $("computer-options").hidden = $("scenario").value !== "computer";
+  if ($("scenario").value === "computer") perform(loadApps, "Reading CU applications…");
+  else controls();
 });
+$("cu-refresh").addEventListener("click", () => perform(loadApps, "Reading CU applications…"));
+$("cu-app").addEventListener("change", () => perform(loadWindows, "Reading CU windows…"));
+$("cu-window").addEventListener("change", controls);
+$("disconnect").addEventListener("click", () => perform(() => call("disconnect"), "Ending this session…"));
 $("choose").addEventListener("click", () =>
   perform(() => call("predict"), "Jev is comparing the actions…"),
 );

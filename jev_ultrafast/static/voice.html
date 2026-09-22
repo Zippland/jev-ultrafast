@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="voice-token" content="__VOICE_TOKEN__"><title>Jev · 语音调试工作台</title><link rel="stylesheet" href="/voice.css"></head>
+<body><header><a class="brand" href="/">jev <span>语音调试工作台</span></a><span id="models" class="hint"></span></header>
+<main>
+<section class="transport" aria-label="录音控制">
+<button id="record" class="mic" aria-label="开启麦克风"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="15" y="6" width="10" height="19" rx="5"/><path d="M10 19v1a10 10 0 0 0 20 0v-1M20 30v6M14 36h12"/></svg><span id="mic-label">开启麦克风</span></button>
+<div class="run-state"><strong id="phase">指令明确时开始执行</strong><span id="timer" class="hint"></span></div>
+<p id="tool-status" class="hint" hidden></p>
+<span class="hint transport-note">关闭麦克风会暂停后续执行</span><button id="trace" disabled>下载 Trace</button><button id="reset">新会话</button>
+</section>
+<div id="error" class="error" hidden role="alert"></div>
+<div id="metrics" class="metrics"></div>
+<div class="workbench">
+<section class="input-panel panel"><div class="section-title"><h2>实时转写</h2><span id="input-version" class="hint">尚无输入</span></div>
+<div id="transcript" class="transcript"><p class="empty">开启麦克风。你的话和回改会显示在这里。</p></div>
+<div class="input-footer"><p class="hint">“已定稿”只表示转写结束，不表示被识别为指令。</p>
+<form id="text-form"><textarea id="text" rows="2" placeholder="输入文字调试同一执行链路" maxlength="16000" aria-label="调试指令"></textarea><button id="send">运行</button></form></div></section>
+<section class="decision-panel panel"><div class="section-title"><h2>Jev 决策</h2><span id="decision-meta" class="hint"></span></div>
+<div id="decision-history" class="decision-history"></div>
+<div class="interpretation"><div id="input-disposition" class="disposition">等待输入</div><p id="decision-speech" class="decision-speech"></p><p class="hint">当前没有逐句闲聊分类；“继续聆听”可能是闲聊、信息不足或任务已完成，不表示这段文字被过滤。</p></div>
+<div id="probabilities" class="probabilities"><p class="empty">等待模型返回候选概率</p></div>
+<div id="outcome-review" class="hint"></div><div id="execution-status" class="hint" aria-live="polite"></div><div id="pending-info" class="hint"></div><div id="generated-text" class="generated"></div>
+<p class="hint probability-note">候选概率用于观察选择，不代表操作成功率或声纹置信度。</p>
+</section>
+<section class="execution-panel panel"><div class="section-title"><h2>执行记录</h2><span class="hint">工具返回 ≠ 任务成功</span></div><p id="activity" class="activity"></p><div id="history" class="history"></div></section>
+<section class="timing-panel panel"><div class="section-title"><h2>转写与耗时</h2></div><div id="asr-debug" class="asr-debug"></div><div id="latencies" class="latencies"></div></section>
+</div>
+<details class="diagnostics"><summary>采集配置、应用状态与原始事件</summary><p id="capture-settings" class="hint">麦克风配置尚未上报</p><p class="hint">降噪不区分说话人。转写在本机完成，指令和应用文本会发送至配置的模型服务。</p><div class="raw-grid"><div><h2>最新应用状态</h2><div id="observations"></div></div><div><h2>实时事件</h2><pre id="events"></pre></div></div><p id="trace-path" class="path"></p></details>
+</main><script src="/voice.js" defer></script></body></html>

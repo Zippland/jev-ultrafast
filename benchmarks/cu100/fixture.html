@@ -1,0 +1,20 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>Jev CU100 浏览器实验</title>
+<style>body{font:18px system-ui;background:#f5f4ef;color:#252525;max-width:760px;margin:35px auto}section{padding:18px;background:white;margin:14px 0;border:1px solid #ddd;border-radius:10px}label{display:block;margin:12px 0}input,textarea,button{font:inherit;padding:8px}input[type=text],textarea{width:80%}button{margin-right:12px}#result{white-space:pre-wrap;min-height:35px}</style>
+<h1>浏览器实验工作台</h1><p id="case">准备中</p>
+<section><h2>文档搜索</h2><label>关键词<input id="query" aria-label="关键词" type="text"></label><label><input id="archived" type="checkbox">包含归档</label><button id="search">搜索</button><button id="clear">清空搜索</button><div id="result" role="status" aria-live="polite">尚未搜索</div></section>
+<section><h2>实验便签</h2><label>备注<textarea id="note" aria-label="备注" rows="3"></textarea></label><button id="save">保存备注</button><div id="saved" role="status">尚未保存</div></section>
+<section><h2>资料卡</h2><p id="code">校验码：等待初始化</p><button id="details">打开资料详情</button><button id="back">返回概览</button><p id="detail">当前页面：概览</p></section>
+<script>
+let revision=-1, seq=0;let searches=[],saved='',detail=false;let chain=Promise.resolve();
+const el=id=>document.getElementById(id);
+function snapshot(){return {revision,seq:++seq,query:el('query').value,archived:el('archived').checked,note:el('note').value,searches:[...searches],saved,detail,result:el('result').textContent,code:el('code').textContent}}
+function report(event){const data={...snapshot(),event};chain=chain.then(()=>fetch('/observe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}));}
+for(const id of ['query','note'])el(id).addEventListener('input',()=>report('input:'+id));
+el('archived').addEventListener('change',()=>report('toggle:archived'));
+el('search').onclick=()=>{searches.push({query:el('query').value,archived:el('archived').checked});el('result').textContent='搜索结果：'+el('query').value+(el('archived').checked?'（包含归档）':'（当前文档）');report('search')};
+el('clear').onclick=()=>{el('query').value='';el('result').textContent='尚未搜索';report('clear')};
+el('save').onclick=()=>{saved=el('note').value;el('saved').textContent='已保存：'+saved;report('save')};
+el('details').onclick=()=>{detail=true;el('detail').textContent='当前页面：资料详情。负责人：林舟；版本：第三版。';report('details')};
+el('back').onclick=()=>{detail=false;el('detail').textContent='当前页面：概览';report('back')};
+async function sync(){try{const c=await(await fetch('/control')).json();if(c.revision!==revision){revision=c.revision;searches=[];saved='';detail=false;seq=0;el('case').textContent='实验文档 '+c.case_id;el('query').value=c.query||'';el('note').value=c.note||'';el('archived').checked=!!c.archived;el('result').textContent='尚未搜索';el('saved').textContent='尚未保存';el('detail').textContent='当前页面：概览';el('code').textContent='校验码：'+c.code;report('reset');}}finally{setTimeout(sync,150)}}sync();
+</script></html>

@@ -132,6 +132,21 @@ form {
   align-items: center;
   gap: 16px;
 }
+.computer-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0 16px;
+  font-size: 12px;
+}
+.computer-options[hidden] {
+  display: none;
+}
+.computer-options small {
+  flex-basis: 100%;
+  color: #77776e;
+}
 input,
 select,
 button {
@@ -277,6 +292,7 @@ a:focus-visible {
 }
 .viewport {
   position: relative;
+  margin: 0 auto;
   aspect-ratio: 1120/780;
   background: #fdfdfb;
   overflow: hidden;

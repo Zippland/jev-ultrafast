@@ -1,0 +1,22 @@
+[
+  {"id":"direct-1","text":"请在关键词里输入北京天气。","act":true},
+  {"id":"direct-2","text":"帮我搜索一下北京天气。","act":true},
+  {"id":"direct-3","text":"关键词填上海天气，先不要搜索。","act":true},
+  {"id":"direct-4","text":"在这里输入明天下午开会。","act":true},
+  {"id":"chat-1","text":"今天下午一起吃饭吗？","act":false},
+  {"id":"chat-2","text":"小王，你帮我搜索一下北京天气。","act":false},
+  {"id":"chat-3","text":"你刚才跟小李说，让他打开浏览器搜索北京天气，对吧。","act":false},
+  {"id":"chat-4","text":"这段演示的内容是，先输入北京天气，再点击搜索。","act":false},
+  {"id":"chat-5","text":"我在跟旁边的人讲话，你先不要动。小王，帮我搜索一下北京天气。","act":false},
+  {"id":"quote-1","text":"小王刚才说，请在关键词里输入北京天气。这只是转述，不要执行。","act":false},
+  {"id":"quote-2","text":"我昨天让小王在关键词里输入北京天气，他没听懂。","act":false},
+  {"id":"quote-3","text":"把小王刚才说的“请在关键词里输入北京天气”这句话填进关键词。","act":true},
+  {"id":"partial-1","text":"等一下，我想让你把这个。","act":false},
+  {"id":"partial-2","text":"在关键词里面输入。","act":false},
+  {"id":"negate-1","text":"不要搜索北京天气，先保持现在这样。","act":false},
+  {"id":"correct-1","text":"关键词输入北京天气，不对，改成上海天气。","act":true},
+  {"id":"background-then-command","text":"我刚才跟小王讨论天气。现在请你帮我搜索北京天气。","act":true},
+  {"id":"command-then-background","text":"请在关键词里填写北京天气。小王，你明天去哪里吃饭？","act":true},
+  {"id":"identity-owner","text":"请在关键词里输入北京天气。","act":true,"category":"identity"},
+  {"id":"identity-bystander","text":"请在关键词里输入北京天气。","act":false,"category":"identity"}
+]

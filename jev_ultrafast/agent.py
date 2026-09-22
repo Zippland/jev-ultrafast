@@ -5,18 +5,19 @@ import time
 from pathlib import Path
 
 from .browser import Browser, StalePage
+from .mcp_client import MCPError
 from .model import action_space, choose, field_context, field_text
 from .questions import MAX_STEPS
 
 
 class Agent:
-    def __init__(self, url, goals, *, record_dir=None, screenshots=False):
+    def __init__(self, url, goals, *, record_dir=None, screenshots=False, backend=None):
         task = goals.strip() if isinstance(goals, str) else "\n".join(goals).strip()
         if not task:
             raise ValueError("Supply a task")
         plan = [task]
         self.pending_text = None
-        self.browser = Browser(url)
+        self.browser = backend if backend is not None else Browser(url)
         self.record_dir = Path(record_dir) if record_dir else None
         self.screenshots = screenshots or bool(record_dir)
         try:
@@ -41,17 +42,45 @@ class Agent:
         )
         if self.record_dir:
             self.record_dir.mkdir(parents=True, exist_ok=True)
-            (self.record_dir / "000000.jpg").write_bytes(base64.b64decode(page["screenshot"]))
+            self._save_frame(page, 0)
+
+    @classmethod
+    def for_app(cls, app, goal, *, window_id=None, **kwargs):
+        """Connect to an independently running CU service through its public MCP entry point."""
+        from .computer import Computer
+
+        backend = Computer(app, window_id=window_id)
+        try:
+            return cls(None, goal, backend=backend, **kwargs)
+        except Exception:
+            backend.close()
+            raise
+
+    def _save_frame(self, page, elapsed_ms):
+        if page.get("screenshot"):
+            extension = "png" if page.get("screenshot_mime") == "image/png" else "jpg"
+            (self.record_dir / f"{elapsed_ms:06d}.{extension}").write_bytes(base64.b64decode(page["screenshot"]))
 
     def snapshot(self):
         return {
             **{k: v for k, v in self.state.items() if k != "browser"},
             "elements": action_space(self.state["page"]["actions"])[0],
+            "execution_events": getattr(self.state["browser"], "events", []),
         }
 
     def command(self, name, body=None):
+        try:
+            return self._command(name, body)
+        except MCPError as exc:
+            self.state.update(status="blocked", decision=None, error=str(exc))
+            self.browser.close()
+            raise
+
+    def _command(self, name, body=None):
         body = body or {}
         state = self.state
+        if state["status"] in {"done", "blocked"}:
+            raise ValueError("This run has stopped. Start a fresh demo.")
         if name == "tick":
             try:
                 self.command("predict", {})
@@ -70,8 +99,6 @@ class Agent:
             if not state["browser"].fresh(state["page"]):
                 state["page"] = state["browser"].observe(screenshot=self.screenshots)
             state["decision"] = None
-            if state["status"] in {"done", "blocked"}:
-                raise ValueError("This run has stopped. Start a fresh demo.")
             if len(state["decisions"]) >= MAX_STEPS * 2:
                 raise ValueError("Reached the demo's model-call budget")
             state["decision"] = choose(state["page"], state["goal"], state["history"])
@@ -147,9 +174,7 @@ class Agent:
                 elapsed_ms=state["elapsed_ms"],
             )
             if state["record"]:
-                (self.record_dir / f"{state['elapsed_ms']:06d}.jpg").write_bytes(
-                    base64.b64decode(state["page"]["screenshot"])
-                )
+                self._save_frame(state["page"], state["elapsed_ms"])
             repeated = state["history"][-3:]
             state["status"] = (
                 "blocked"

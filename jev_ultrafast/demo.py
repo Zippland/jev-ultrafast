@@ -10,6 +10,8 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 from .agent import Agent
+from .computer import json_content
+from .mcp_client import MCPClient
 from .questions import MAX_STEPS
 
 ROOT = Path(__file__).parent
@@ -26,7 +28,10 @@ def load_environment():
         for line in path.read_text().splitlines():
             if "=" in line and not line.startswith("#"):
                 key, value = line.split("=", 1)
-                os.environ.setdefault(key, value)
+                value = value.strip()
+                if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+                    value = value[1:-1]
+                os.environ.setdefault(key.strip(), value)
 
 
 def response_state():
@@ -43,22 +48,37 @@ def close_browser():
 
 def command(name, body):
     global AGENT
-    if name == "reset":
+    if name in {"cu_apps", "cu_windows"}:
+        # Discovery has its own short connection; the active run keeps its persistent session.
+        with MCPClient() as client:
+            if name == "cu_apps":
+                return json_content(client.call("list_apps", {"include_installed": False, "include_icons": False}))
+            app = body.get("app")
+            if not isinstance(app, str) or not app:
+                raise ValueError("Select an application first")
+            return json_content(client.call("list_windows", {"app": app}))
+    if name == "disconnect":
+        close_browser()
+    elif name == "reset":
         scenario = body.get("scenario", "flights")
-        if scenario not in {"travel", "research", "flights"}:
+        if scenario not in {"travel", "research", "flights", "computer"}:
             raise ValueError("Unknown demo scenario")
         goal = body.get("goal", "").strip()
         if not goal or len(goal) > 2000:
             raise ValueError("Enter 1–2,000 characters")
+        if scenario == "computer" and (not body.get("app") or type(body.get("window_id")) is not int):
+            raise ValueError("Select an application and one visible window")
         close_browser()
-        AGENT = Agent(
-            "https://www.google.com/travel/flights?hl=en"
-            if scenario == "flights"
-            else f"{ORIGIN}/fixture.html?scenario={scenario}",
-            goal,
-            screenshots=True,
-            record_dir=Path.cwd() / "artifacts" / "frames" if body.get("record") else None,
-        )
+        options = dict(screenshots=True, record_dir=Path.cwd() / "artifacts" / "frames" if body.get("record") else None)
+        if scenario == "computer":
+            AGENT = Agent.for_app(body["app"], goal, window_id=body["window_id"], **options)
+        else:
+            AGENT = Agent(
+                "https://www.google.com/travel/flights?hl=en"
+                if scenario == "flights"
+                else f"{ORIGIN}/fixture.html?scenario={scenario}",
+                goal, **options,
+            )
         AGENT.state["scenario"] = scenario
     else:
         if AGENT is None:
@@ -139,6 +159,7 @@ def main():
         pass
     finally:
         server.server_close()
+        close_browser()
 
 
 if __name__ == "__main__":
