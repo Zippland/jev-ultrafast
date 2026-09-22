@@ -14,6 +14,12 @@ from .tracing import CURRENT_TRACE
 
 # These patterns decode the tool's wire format, never user intent or task text.
 ROW = re.compile(r"^(\t*)(\d+) ([^\n]*)(?:\n(?!\t*\d+ |The focused UI element)[^\n]*)*", re.M)
+# Every section the runtime can append after the indexed tree. Selection and
+# focus are independently optional, and the selected-element block re-lists rows
+# the tree already numbered, so the tree ends at whichever appears first.
+TRAILERS = re.compile(r"\nSelected text: ```\n|\nSelected:\n|\nThe focused UI element is ")
+FENCE = re.compile(r"\nSelected text: ```\n.*?\n```", re.S)
+INDEXED = re.compile(r"^\t*(\d+) ", re.M)
 ATTRIBUTE = re.compile(r",? (Description|Help|ID|Value|URL|Placeholder|Secondary Actions): ")
 ROLES = {
     "标准窗口": "AXWindow", "container": "AXGroup", "分离组": "AXSplitGroup", "分离器": "AXSplitter",
@@ -35,6 +41,25 @@ RAISE_HELP = ("Raise requests a change in window stacking. It does not open a br
               "use the observed desktop focus to check that separately.")
 
 
+def split_trailers(body):
+    """Split the indexed tree from the optional sections the runtime appends after it.
+
+    Element values are inlined unescaped, so document text can begin a line with a
+    trailer prefix. Accept the earliest cut whose suffix only re-lists rows the tree
+    already numbered; a suffix carrying unseen indices is document text, and cutting
+    there would hand the agent a silently truncated action space.
+    """
+    for match in TRAILERS.finditer(body):
+        head = body[:match.start()]
+        indices = [int(row.group(2)) for row in ROW.finditer(head)]
+        if indices != list(range(len(indices))):
+            continue
+        tail = FENCE.sub("", body[match.start():])
+        if all(int(seen.group(1)) < len(indices) for seen in INDEXED.finditer(tail)):
+            return head, body[match.start():]
+    return body, ""
+
+
 def read_relay_page(result, app, expected_title, tools, *, document_url=None, full_tools=False,
                     excluded_origins=(), keyboard_fill=False):
     texts = [block["text"] for block in result.get("content", []) if block.get("type") == "text"]
@@ -53,17 +78,15 @@ def read_relay_page(result, app, expected_title, tools, *, document_url=None, fu
     if expected_title is not None and window.group(1) != expected_title:
         raise MCPError("cua-relay key window does not match the bound test app/title; no action permitted")
     expected_title = window.group(1)
-    tree = body.split("\n", 2)[2].split("\nThe focused UI element is ", 1)[0]
-    tree = tree.split("\nSelected text:", 1)[0].rstrip()
-    selection = re.search(r"(?:^|\n)Selected text: ```\n(.*?)\n```(?:\n\nNote:|\s*$)",
-                          "\n".join(texts), re.S)
+    tree, trailers = split_trailers(body.split("\n", 2)[2])
+    selection = re.search(r"Selected text: ```\n(.*?)\n```", trailers, re.S)
     selected_text = selection.group(1) if selection else None
     rows = list(ROW.finditer(tree))
     if not rows or [int(row.group(2)) for row in rows] != list(range(len(rows))):
         raise MCPError("Ambiguous or truncated cua-relay indexed tree")
     actions, lines, parents, elements = [], [], {}, []
     window_url = None
-    focused = re.search(r"The focused UI element is (\d+) ", body)
+    focused = re.search(r"The focused UI element is (\d+) ", trailers)
     focused_index = focused.group(1) if focused else None
     excluded_depth, excluded_indices = None, set()
     for row in rows:
@@ -81,7 +104,7 @@ def read_relay_page(result, app, expected_title, tools, *, document_url=None, fu
             break  # Native menu bar is outside the bound window, as in the Codex-CU adapter.
         if role == "AXWindowDecoration" and not full_tools:
             continue
-        rest = content[len(role_name):].lstrip() if role_name else content
+        rest = content[len(role_name):].lstrip(" ") if role_name else content
         flags = ""
         if rest.startswith("("):
             flags, separator, rest = rest[1:].partition(")")

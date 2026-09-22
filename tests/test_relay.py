@@ -58,8 +58,12 @@ def test_multiline_values_and_supported_targets_are_preserved():
 
 
 def test_native_selection_is_preserved_and_part_of_state_freshness():
+    # The runtime emits selection inside <app_state>, before the focus line.
     response = result()
-    response['content'][0]['text'] += '\nSelected text: ```\n/search?q=old\n```\n\nNote: Selection metadata.'
+    response['content'][0]['text'] = response['content'][0]['text'].replace(
+        "\nThe focused UI element is",
+        "\nSelected text: ```\n/search?q=old\n```\n\nNote: Selection metadata."
+        "\nThe focused UI element is")
     page = read_relay_page(response, APP, TITLE, TOOLS)
     assert page['selected_text'] == '/search?q=old'
     changed = copy.deepcopy(response)
@@ -71,6 +75,35 @@ def test_native_selection_is_preserved_and_part_of_state_freshness():
     from jev_ultrafast.mixed import observation_context
     context = observation_context({'surfaces': {'cu:app': page}}, {'app': {'name': 'Test'}})
     assert context[0]['selected_text'] == '/search?q=old'
+
+
+def test_selected_element_block_is_not_read_as_indexed_rows():
+    # Notes emits "Selected:" re-listing an already-numbered row, and no focus line.
+    response = result()
+    response['content'][0]['text'] = response['content'][0]['text'].replace(
+        "\nThe focused UI element is", "\nSelected:\n\t2 row (selected) Secondary Actions: 置顶, 删除\n"
+        "\n\nNote: Pay special attention to the content selected by the user.\nThe focused UI element is")
+    page = read_relay_page(response, APP, TITLE, TOOLS)
+    assert 'row (selected)' not in page['text'] and 'Pay special attention' not in page['text']
+    assert [a['element_index'] for a in page['actions'] if a['kind'] == 'fill'] == ['2']
+    assert page['selected_text'] is None
+
+
+def test_document_text_resembling_a_trailer_does_not_truncate_the_tree():
+    # Element values are inlined unescaped; a note body may start a line with a
+    # trailer prefix. Cutting there would silently shrink the action space.
+    page = read_relay_page(result(value="see below\nSelected text: 见上\nmore body"), APP, TITLE, TOOLS)
+    assert [a['element_index'] for a in page['actions'] if a['kind'] == 'fill'] == ['2']
+    assert page['actions'] and page['selected_text'] is None
+    assert '见上' in next(a['value'] for a in page['actions'] if a['kind'] == 'fill')
+
+
+def test_nonbreaking_space_before_a_paren_is_label_text_not_element_flags():
+    response = result()
+    response['content'][0]['text'] = response['content'][0]['text'].replace(
+        "\t4 关闭按钮\n", "\t4 文本 \xa0(\n")
+    page = read_relay_page(response, APP, TITLE, TOOLS)
+    assert '[4] AXStaticText' in page['text']
 
 
 def test_browser_link_and_combobox_wire_roles_are_actionable():
